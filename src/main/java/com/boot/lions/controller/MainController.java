@@ -63,12 +63,13 @@ public class MainController {
              if(!uploadDir.exists())
              {
                  uploadDir.mkdir();
+                 System.out.println("mkdir");
              }
              System.out.println(System.getProperty("user.dir")+uploadPath);
              String uuidFile= UUID.randomUUID().toString();
              String resultFilename= uuidFile+"."+file.getOriginalFilename();
              file.transferTo(new File(System.getProperty("user.dir")+uploadPath+"/"+resultFilename));
-            message.setFilename(resultFilename);
+             message.setFilename(resultFilename);
         }
 
         messageRepo.save(message);
