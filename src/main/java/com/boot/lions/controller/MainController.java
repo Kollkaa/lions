@@ -1,6 +1,7 @@
 package com.boot.lions.controller;
 
 
+import com.boot.lions.Application;
 import com.boot.lions.domain.Message;
 import com.boot.lions.domain.User;
 import com.boot.lions.repos.MessageRepo;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.UUID;
 
@@ -54,18 +56,20 @@ public class MainController {
             @RequestParam String text,
             @RequestParam String tag, Map<String, Object> model,
             @RequestParam("file") MultipartFile file
-    ) throws IOException {
+    ) throws IOException, URISyntaxException {
         Message message = new Message(text, tag, user);
 
         if (file!=null)
         {
-             File uploadDir=new File(System.getProperty("user.dir")+uploadPath);
+             File uploadDir=new File(new File(Application.class.getProtectionDomain().getCodeSource().getLocation()
+                     .toURI()).getPath()+uploadPath);
              if(!uploadDir.exists())
              {
                  uploadDir.mkdir();
                  System.out.println("mkdir");
              }
-             System.out.println(System.getProperty("user.dir")+uploadPath);
+             System.out.println(new File(Application.class.getProtectionDomain().getCodeSource().getLocation()
+                     .toURI()).getPath()+uploadPath);
              String uuidFile= UUID.randomUUID().toString();
              String resultFilename= uuidFile+"."+file.getOriginalFilename();
              file.transferTo(new File(System.getProperty("user.dir")+uploadPath+"/"+resultFilename));
