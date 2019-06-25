@@ -66,16 +66,16 @@ public class MainController {
 
         if (file!=null)
         {
-             File uploadDir=new File(System.getProperty("user.dir")+uploadPath);
+             File uploadDir=new File(uploadPath);
              if(!uploadDir.exists())
              {
                  uploadDir.mkdir();
                  System.out.println("mkdir");
              }
-             System.out.println(System.getProperty("user.dir")+uploadPath);
+             System.out.println(uploadPath);
              String uuidFile= UUID.randomUUID().toString();
              String resultFilename= uuidFile+"_"+file.getOriginalFilename();
-             file.transferTo(new File(System.getProperty("user.dir")+uploadPath+"/"+resultFilename));
+             file.transferTo(new File(uploadPath+"/"+resultFilename));
              message.setFilename(resultFilename);
         }
 
