@@ -48,6 +48,13 @@ public class MainController {
         return "main";
     }
 
+    @GetMapping("/error")
+    public String error()
+    {
+        return "error";
+    }
+
+
     @PostMapping("/main")
     public String add(
             @AuthenticationPrincipal User user,
@@ -67,7 +74,7 @@ public class MainController {
              }
              System.out.println(System.getProperty("user.dir")+uploadPath);
              String uuidFile= UUID.randomUUID().toString();
-             String resultFilename= uuidFile+"."+file.getOriginalFilename();
+             String resultFilename= uuidFile+"_"+file.getOriginalFilename();
              file.transferTo(new File(System.getProperty("user.dir")+uploadPath+"/"+resultFilename));
              message.setFilename(resultFilename);
         }
