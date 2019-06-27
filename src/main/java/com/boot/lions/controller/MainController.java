@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
@@ -69,14 +71,19 @@ public class MainController {
              File uploadDir=new File(uploadPath);
              if(!uploadDir.exists())
              {
-                 uploadDir.mkdir();
+                uploadDir.mkdir();
                  System.out.println("mkdir");
              }
-             System.out.println(uploadPath);
-             String uuidFile= UUID.randomUUID().toString();
-             String resultFilename= uuidFile+"_"+file.getOriginalFilename();
-             file.transferTo(new File(uploadPath+"/"+resultFilename));
-             message.setFilename(resultFilename);
+
+             System.out.println(uploadDir.getAbsolutePath());
+             String uuidFile= "12";
+             String resultFilename= uuidFile+"-"+file.getOriginalFilename();
+
+            File image=new File(uploadDir.getAbsolutePath()+"/"+resultFilename);
+            file.transferTo(image);
+            message.setPath(uploadDir.getAbsolutePath());
+            message.setFilename(uploadDir.getAbsolutePath()+"/"+resultFilename);
+
         }
 
         messageRepo.save(message);

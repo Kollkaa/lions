@@ -14,8 +14,7 @@ public class Message {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User author;
-
-
+    private String path;
     private String filename;
     public  Message(){}
 
@@ -26,6 +25,18 @@ public class Message {
 
         this.tag = tag;
     }
+
+
+
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     public String getFilename() {
         return filename;
     }
