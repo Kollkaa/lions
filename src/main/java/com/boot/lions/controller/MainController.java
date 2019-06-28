@@ -94,6 +94,6 @@ public class MainController {
 
         model.put("messages", messages);
 
-        return "redirect:/main";
+        return "/main";
     }
 }
