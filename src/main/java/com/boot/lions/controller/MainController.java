@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -57,11 +58,12 @@ public class MainController {
     }
 
 
-    @PostMapping("/main")
+    @PostMapping("/add")
     public String add(
             @AuthenticationPrincipal User user,
             @RequestParam String text,
-            @RequestParam String tag, Map<String, Object> model,
+            @RequestParam String tag,
+            Map<String, Object> model,
             @RequestParam("file") MultipartFile file
     ) throws IOException {
         Message message = new Message(text, tag, user);
@@ -75,14 +77,14 @@ public class MainController {
                  System.out.println("mkdir");
              }
 
-             System.out.println(uploadDir.getAbsolutePath());
-             String uuidFile= "12";
-             String resultFilename= uuidFile+"-"+file.getOriginalFilename();
-
+            System.out.println(file.getResource());
+            System.out.println(uploadDir.getAbsolutePath());
+            String uuidFile= "12";
+            String resultFilename= uuidFile+"-"+file.getOriginalFilename();
             File image=new File(uploadDir.getAbsolutePath()+"/"+resultFilename);
             file.transferTo(image);
             message.setPath(uploadDir.getAbsolutePath());
-            message.setFilename(uploadDir.getAbsolutePath()+"/"+resultFilename);
+            message.setFilename(resultFilename);
 
         }
 
@@ -92,6 +94,6 @@ public class MainController {
 
         model.put("messages", messages);
 
-        return "main";
+        return "redirect:/main";
     }
 }

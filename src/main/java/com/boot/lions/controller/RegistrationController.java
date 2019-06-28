@@ -36,3 +36,11 @@ public class RegistrationController {
         return "redirect:/login";
     }
 }
+/*
+spring.datasource.url=jdbc:postgres://kmfatvgrousnuc:981a06c8e2e66ad9b752450442fd5e6254021a8bcf4bb750941519d44a8802a5@ec2-54-217-234-157.eu-west-1.compute.amazonaws.com:5432/d6ja97ahuklicl
+
+spring.datasource.username=kmfatvgrousnuc
+spring.datasource.password=981a06c8e2e66ad9b752450442fd5e6254021a8bcf4bb750941519d44a8802a5
+spring.jpa.generate-ddl=true
+
+ */

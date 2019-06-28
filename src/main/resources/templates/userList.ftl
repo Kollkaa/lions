@@ -1,5 +1,4 @@
 <#import "parts/common.ftl" as c>
-
 <@c.page>
     Перегляд Користувачів
 
