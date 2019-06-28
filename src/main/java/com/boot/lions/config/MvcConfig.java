@@ -17,17 +17,17 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/img/**")
-                .addResourceLocations("file:"+uploadPath);
+                .addResourceLocations("file:"+uploadPath+"/");
     }
 
-    /* swvcgyvmwkvusk
-     7ba42d8b0ed1a31012a51ec00ff81ca8eb4ac854552cb7307a50ad1475d7141e
-      swvcgyvmwkvusk:7ba42d8b0ed1a31012a51ec00ff81ca8eb4ac854552cb7307a50ad1475d7141e@ec2-54-247-189-1.eu-west-1.compute.amazonaws.com:5432/d2pb1n8cjlag90
-    */
+
     public  void addViewControllers(ViewControllerRegistry registry){
         registry.addViewController("/login").setViewName("login");
 
     }
-
+ /* swvcgyvmwkvusk
+     7ba42d8b0ed1a31012a51ec00ff81ca8eb4ac854552cb7307a50ad1475d7141e
+      swvcgyvmwkvusk:7ba42d8b0ed1a31012a51ec00ff81ca8eb4ac854552cb7307a50ad1475d7141e@ec2-54-247-189-1.eu-west-1.compute.amazonaws.com:5432/d2pb1n8cjlag90
+    */
 
 }
