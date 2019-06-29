@@ -85,7 +85,7 @@ public class MainController {
             file.transferTo(image);
             message.setPath(uploadDir.getAbsolutePath());
             message.setFilename(resultFilename);
-
+            System.out.println(image.getAbsolutePath()+file.getOriginalFilename());
         }
 
         messageRepo.save(message);
