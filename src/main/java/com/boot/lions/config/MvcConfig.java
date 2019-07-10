@@ -9,19 +9,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
-    @Value("${upload.path}")
-    private String uploadPath;
-    @Value("${upload.path}")
-    private String loadBack;
 
+    @Value("${cssdir.path}")
+    private String cssdir;
 
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/img/**")
-                .addResourceLocations("file:"+uploadPath+"/");
-        registry.addResourceHandler("/backimg/**")
-                .addResourceLocations("file:"+loadBack+"/");
+
+
+        registry.addResourceHandler("/css/**")
+                .addResourceLocations("file:src/main/resources/static/css/");
     }
 
 

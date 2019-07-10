@@ -15,7 +15,8 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private boolean active;
-
+    private Long chat_id;
+    private boolean support_admin;
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
@@ -23,6 +24,14 @@ public class User implements UserDetails {
 
     public boolean isAdmin() {
         return roles.contains(Role.ADMIN);
+    }
+
+    public boolean isSupport_admin() {
+        return support_admin;
+    }
+
+    public void setSupport_admin(boolean support_admin) {
+        this.support_admin = support_admin;
     }
 
     public Long getId() {
@@ -35,6 +44,14 @@ public class User implements UserDetails {
 
     public String getUsername() {
         return username;
+    }
+
+    public Long getChat_id() {
+        return chat_id;
+    }
+
+    public void setChat_id(Long chat_id) {
+        this.chat_id = chat_id;
     }
 
     @Override

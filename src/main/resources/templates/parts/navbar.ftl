@@ -19,6 +19,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/user">Пользователи</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/backimages">Изменить фоновые изображения</a>
+                </li>
             </#if>
         </ul>
 
