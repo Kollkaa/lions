@@ -57,112 +57,106 @@ public class Bot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         if(update.hasMessage())
         {if(update.getMessage().getText()!=null)
+           System.out.println(update.getMessage().getChatId());
             switch (update.getMessage().getText()) {
-               case "/start":
+                case "/start":
 
-                   if(userRepo.findByUsername(update.getMessage().getFrom().getUserName())==null) {
-                       try {
-                           use.setUsername(update.getMessage().getFrom().getUserName());
-                       }catch (Exception e)
-                       {use.setUsername(update.getMessage().getFrom().getFirstName());}
-                       use.setPassword("1111");
-                       use.setActive(true);
-                       use.setRoles(Collections.singleton(Role.USER));
-                       use.setChat_id(update.getMessage().getChatId());
-                       userRepo.save(use);
-                       System.out.println("registration");
-                   }
-                   else
-                   {
-                       use=userRepo.findByUsername(update.getMessage().getFrom().getUserName());
-                       System.out.println("login");
-                   }
-                   try {
-                       sendApiMethod(sendMessageRemake("Вас приветсвует DemoBot telegram", update.getMessage().getChatId(),1));
-                   } catch (TelegramApiException e) {
-                       e.printStackTrace();
-                   }
+                    if (userRepo.findByUsername(update.getMessage().getFrom().getUserName()) == null) {
+                        try {
+                            use.setUsername(update.getMessage().getFrom().getUserName());
+                        } catch (Exception e) {
+                            use.setUsername(update.getMessage().getFrom().getFirstName());
+                        }
+                        use.setPassword("1111");
+                        use.setActive(true);
+                        use.setRoles(Collections.singleton(Role.USER));
+                        use.setChat_id(update.getMessage().getChatId());
+                        userRepo.save(use);
+                        System.out.println("registration");
+                    } else {
+                        use = userRepo.findByUsername(update.getMessage().getFrom().getUserName());
+                        System.out.println("login");
+                    }
+                    try {
+                        sendApiMethod(sendMessageRemake("Вас приветсвует DemoBot telegram", update.getMessage().getChatId(), 1));
+                    } catch (TelegramApiException e) {
+                        e.printStackTrace();
+                    }
 
-                   break;
-               case "Отключить админа":
-                 if(use.isSupport_admin())
-                     use.setSupport_admin(false);
-                   try {
-                       sendApiMethod(sendMessageRemake("... Админ отключен",update.getMessage().getChatId(),1));
-                   } catch (TelegramApiException e) {
-                       e.printStackTrace();
-                   }
+                    break;
+                case "Отключить админа":
+                    if (use.isSupport_admin())
+                        use.setSupport_admin(false);
+                    try {
+                        sendApiMethod(sendMessageRemake("... Админ отключен", update.getMessage().getChatId(), 1));
+                    } catch (TelegramApiException e) {
+                        e.printStackTrace();
+                    }
 
-                   break;
-               case "Написать админу":
+                    break;
+                case "Написать админу":
 
-                   List<User> users=userRepo.findAll();
+                    List<User> users = userRepo.findAll();
 
-                   try {
-                    for (User us : users)
-                    {
-                        if(us.isAdmin())
-                        {
-                            admin=us;
-                            use.setSupport_admin(true);
-                            System.out.println(support_admin);
+                    try {
+                        for (User us : users) {
+                            if (us.isAdmin()) {
+                                admin = us;
+                                use.setSupport_admin(true);
+                                System.out.println(use.isSupport_admin());
+                            }
+                        }
+
+                    } catch (NullPointerException e) {
+                        System.out.println(e.getMessage());
+                        try {
+                            sendApiMethod(sendMessageRemake("Извените на даный момент нет свободних администраторов", update.getMessage().getChatId(), 1));
+                        } catch (TelegramApiException e1) {
+                            e1.printStackTrace();
                         }
                     }
 
-                  }
-                   catch (NullPointerException e)
-                   {
-                       System.out.println(e.getMessage());
-                       try {
-                           sendApiMethod(sendMessageRemake("Извените на даный момент нет свободних администраторов", update.getMessage().getChatId(),1));
-                       } catch (TelegramApiException e1) {
-                           e1.printStackTrace();
-                       }
-                   }
 
-
-                   if (admin != null)
-                   {           try {
-                           sendApiMethod(sendMessageRemake("К вам подключен " + admin.getUsername()+". Задайте вопрос которий вас волнует", update.getMessage().getChatId(),2));
-                       } catch (TelegramApiException e) {
-                           e.printStackTrace();
-                       }
-                   }
-
-                   break;
-               case"Просмотреть услуги":
-                   String str ="";
-                   for(String s:products)
-                   {
-                     str+=s+"\n";
-                   }
-
-                   try {
-                       sendApiMethod(sendMessageRemake(str, update.getMessage().getChatId(),1));
-                   } catch (TelegramApiException e) {
-                       e.printStackTrace();
-                   }
-                   break;
-               case"Назад":
-                   try {
-                       sendApiMethod(sendMessageRemake("...",update.getMessage().getChatId(),1));
-                   } catch (TelegramApiException e) {
-                       e.printStackTrace();
-                   }
-                   break;
-               default:
-                   if(use.isAdmin())
-                   {
-                       System.out.println();
-                       try {
-                           execute(new SendMessage().setText(update.getMessage().getText()).setChatId(use.getChat_id()));
-                       } catch (TelegramApiException e) {
-                           e.printStackTrace();
-                       }
-                   }else  if(use.isSupport_admin()) {
+                    if (admin != null) {
                         try {
-                            sendApiMethod(new SendMessage().setChatId(admin.getChat_id()).setText(update.getMessage()
-                                    .getText()+"\n from"+update.getMessage().getChatId()));
+                            sendApiMethod(sendMessageRemake("К вам подключен " + admin.getUsername() + ". Задайте вопрос которий вас волнует", update.getMessage().getChatId(), 2));
+                        } catch (TelegramApiException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    break;
+                case "Просмотреть услуги":
+                    String str = "";
+                    for (String s : products) {
+                        str += s + "\n";
+                    }
+
+                    try {
+                        sendApiMethod(sendMessageRemake(str, update.getMessage().getChatId(), 1));
+                    } catch (TelegramApiException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "Назад":
+                    try {
+                        sendApiMethod(sendMessageRemake("...", update.getMessage().getChatId(), 1));
+                    } catch (TelegramApiException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                default:
+                 if(update.getMessage().isReply())
+                 {
+                     try {
+                         sendApiMethod(new SendMessage().setChatId( update.getMessage().getReplyToMessage().getText().split("from")[1].trim()).setText(update.getMessage().getText()));
+                     } catch (TelegramApiException e) {
+                         e.printStackTrace();
+                     }
+                 }else if(use.isSupport_admin()) {
+                        try {
+                            sendApiMethod(new SendMessage().setChatId(Long.valueOf("-333820295")).setText(update.getMessage()
+                                    .getText()+"\n from "+update.getMessage().getChatId()));
                         } catch (TelegramApiException e) {
                             e.printStackTrace();
                         }
